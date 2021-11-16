@@ -7,7 +7,7 @@ QT += network
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE
 CONFIG += no_include_pwd
 CONFIG += thread
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets 
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += -static
 # for boost 1.37, add -mt to the boost libraries
 # use: qmake BOOST_LIB_SUFFIX=-mt
@@ -18,18 +18,35 @@ CONFIG += -static
 # Dependency library locations can be customized with:
 #    BOOST_INCLUDE_PATH, BOOST_LIB_PATH, BDB_INCLUDE_PATH,
 #    BDB_LIB_PATH, OPENSSL_INCLUDE_PATH and OPENSSL_LIB_PATH respectively
-BOOST_LIB_SUFFIX=
-BOOST_INCLUDE_PATH=/home/tao/deps/boost_1_65_0
-BOOST_LIB_PATH=/home/tao/deps/boost_1_65_0/stage/lib
-BDB_INCLUDE_PATH=/home/tao/deps/db-5.1.29/build_unix
-BDB_LIB_PATH=/home/tao/deps/db-5.1.29/build_unix
-OPENSSL_INCLUDE_PATH=/home/tao/deps/openssl-1.1.0g/include
-OPENSSL_LIB_PATH=/home/tao/deps/openssl-1.1.0g
-MINIUPNPC_INCLUDE_PATH=/home/tao/deps/miniupnp
-MINIUPNPC_LIB_PATH=/home/tao/deps/miniupnp/miniupnpc
-QRENCODE_INCLUDE_PATH=/usr/include
-QRENCODE_LIB_PATH=/usr/lib/x86_64-linux-gnu
-PNG_LIB_PATH=/usr/lib/x86_64-linux-gnu
+
+#BOOST_LIB_SUFFIX=
+#BOOST_INCLUDE_PATH=/home/tao/deps/boost_1_65_0
+#BOOST_LIB_PATH=/home/tao/deps/boost_1_65_0/stage/lib
+#BDB_INCLUDE_PATH=/home/tao/deps/db-5.1.29/build_unix
+#BDB_LIB_PATH=/home/tao/deps/db-5.1.29/build_unix
+#OPENSSL_INCLUDE_PATH=/home/tao/deps/openssl-1.1.0g/include
+#OPENSSL_LIB_PATH=/home/tao/deps/openssl-1.1.0g
+#MINIUPNPC_INCLUDE_PATH=/home/tao/deps/miniupnp
+#MINIUPNPC_LIB_PATH=/home/tao/deps/miniupnp/miniupnpc
+#QRENCODE_INCLUDE_PATH=/usr/include
+#QRENCODE_LIB_PATH=/usr/lib/x86_64-linux-gnu
+#PNG_LIB_PATH=/usr/lib/x86_64-linux-gnu
+
+BASEPREFIX=/home/ubuntu/project/abcmint/depends
+HOST=x86_64-pc-linux-gnu
+DEPENDS_PATH=$$BASEPREFIX/$$HOST
+BOOST_LIB_SUFFIX=-mt
+BOOST_INCLUDE_PATH=$$DEPENDS_PATH/include
+BOOST_LIB_PATH=$$DEPENDS_PATH/lib
+BDB_INCLUDE_PATH=$$DEPENDS_PATH/include
+BDB_LIB_PATH=$$DEPENDS_PATH/lib
+OPENSSL_INCLUDE_PATH=$$DEPENDS_PATH/include
+OPENSSL_LIB_PATH=$$DEPENDS_PATH/lib
+MINIUPNPC_INCLUDE_PATH=$$DEPENDS_PATH/include
+MINIUPNPC_LIB_PATH=$$DEPENDS_PATH/lib
+QRENCODE_INCLUDE_PATH=$$DEPENDS_PATH/include
+QRENCODE_LIB_PATH=$$DEPENDS_PATH/lib
+PNG_LIB_PATH=$$DEPENDS_PATH/lib
 
 OBJECTS_DIR = build
 MOC_DIR = build
@@ -50,7 +67,7 @@ contains(RELEASE, 1) {
 
 !win32 {
     # for extra security against potential buffer overflows: enable GCCs Stack Smashing Protection
-    QMAKE_CXXFLAGS *= -fstack-protector-all 
+    QMAKE_CXXFLAGS *= -fstack-protector-all
     QMAKE_LFLAGS *= -fstack-protector-all
     # Exclude on Windows cross compile with MinGW 4.2.x, as it will result in a non-working executable!
     # This can be enabled for Windows, when we switch to MinGW >= 4.4.x.
@@ -417,7 +434,7 @@ OTHER_FILES += README.md \
 
 # platform specific defaults, if not overridden on command line
 isEmpty(BOOST_LIB_SUFFIX) {
-    macx:BOOST_LIB_SUFFIX = 
+    macx:BOOST_LIB_SUFFIX =
     win32:BOOST_LIB_SUFFIX = -mgw44-mt-s-1_50
 }
 
@@ -489,8 +506,8 @@ win32:LIBS += -lws2_32 -lshlwapi -lmswsock -lole32 -loleaut32 -luuid -lgdi32
 #LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_THREAD_LIB_SUFFIX
 win32:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
 macx:LIBS += -lboost_chrono$$BOOST_LIB_SUFFIX
-LIBS += $$BOOST_LIB_PATH/libboost_system.a  $$BOOST_LIB_PATH/libboost_filesystem.a  $$BOOST_LIB_PATH/libboost_program_options.a
-LIBS += $$BOOST_LIB_PATH/libboost_thread.a  $$BOOST_LIB_PATH/libboost_chrono.a
+LIBS += $$BOOST_LIB_PATH/libboost_system-mt.a  $$BOOST_LIB_PATH/libboost_filesystem-mt.a  $$BOOST_LIB_PATH/libboost_program_options-mt.a
+LIBS += $$BOOST_LIB_PATH/libboost_thread-mt.a  $$BOOST_LIB_PATH/libboost_chrono-mt.a
 LIBS += $$BDB_LIB_PATH/libdb_cxx.a
 LIBS += $$OPENSSL_LIB_PATH/libssl.a  $$OPENSSL_LIB_PATH/libcrypto.a
 LIBS += $$PNG_LIB_PATH/libpng.a
