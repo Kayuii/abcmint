@@ -4,15 +4,15 @@
 # :=0 --> UPnP support turned off by default at runtime
 # :=1 --> UPnP support turned on by default at runtime
 # :=- --> No UPnP support - miniupnp not required
-USE_UPNP:=1
+# USE_UPNP:=1
 
 # :=1 --> Enable IPv6 support
 # :=0 --> Disable IPv6 support
-USE_IPV6:=1
+# USE_IPV6:=1
 
 # :=1 --> GPU mining support turned on
 # :=- --> No GPU mining  support
-USE_GPU := 1
+# USE_GPU := 1
 
 LINK:=$(CXX)
 
@@ -199,23 +199,22 @@ pqcrypto/%.o: pqcrypto/%.cpp
 	  rm -f $(@:%.o=%.d)
 pqcrypto/libpqcrypto.a: $(PQCOBJS)
 	ar rcs $@ $^
-ifneq (${USE_GPU}, -)
-        DEFS += -DUSE_GPU=$(USE_GPU)
-        OBJS += obj/gpumining.o
-        OBJS += obj/libgpumining.a
-        SHALL=/bin/bash
-        K = 20
-        UNROLL = 8
-        NVCC = nvcc
-        NVCFLAGS =  --resource-usage -lineinfo -DPARK=$(K)
-        OMPFLAGS ?= -fopenmp -lomp
+ifneq (${USE_GPU}, 0)
+DEFS += -DUSE_GPU=$(USE_GPU)
+OBJS += obj/gpumining.o
+OBJS += obj/libgpumining.a
+SHALL=/bin/bash
+K = 20
+UNROLL = 8
+NVCC = /usr/local/cuda/bin
+NVCFLAGS =  --resource-usage -lineinfo -DPARK=$(K)
+OMPFLAGS ?= -fopenmp -lomp
 #LIBS += -L/usr/local/cuda/lib64 -l cudart
 #LIBS +=-l cudart_static.a
-DEFS +=-I /usr/local/cuda/include
+DEFS += -I/usr/local/cuda/include/
 # LIBS += -lrt /usr/local/cuda-9.2/lib64/libcudart_static.a
-LIBS += -L /usr/local/cuda/lib64/
+LIBS += -L/usr/local/cuda/lib64/
 #dynamic
-
 LIBS += -lcudadevrt -lcudart
 # static
 # LIBS += -lcudadevrt -lcudart_static -lrt -pthread -ldl -lc -lpthread -Bstatic -lgcc -lstdc++

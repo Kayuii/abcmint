@@ -32,7 +32,7 @@ export PNG_LIB_PATH=$DEPENDS_PATH/lib
 
 export USE_UPNP=1
 export USE_IPV6=1
-export USE_GPU=1
+export USE_GPU=0
 
 if [ ! "$REBUILD" == "" ]; then
 make -f makefile.unix clean
