@@ -206,7 +206,7 @@ OBJS += obj/libgpumining.a
 SHALL=/bin/bash
 K = 20
 UNROLL = 8
-NVCC = /usr/local/cuda/bin
+NVCC = /usr/local/cuda/bin/nvcc
 NVCFLAGS =  --resource-usage -lineinfo -DPARK=$(K)
 OMPFLAGS ?= -fopenmp -lomp
 #LIBS += -L/usr/local/cuda/lib64 -l cudart

@@ -37,5 +37,5 @@ export USE_GPU=1
 if [ ! "$REBUILD" == "" ]; then
 make -f makefile.unix clean
 fi
-make -f makefile.unix -j$(nproc)
-# make -f makefile.unix
+# make -f makefile.unix -j$(nproc)
+make -f makefile.unix
