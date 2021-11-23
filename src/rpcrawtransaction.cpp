@@ -166,7 +166,6 @@ Value getrawtransaction(const Array& params, bool fHelp)
     return result;
 }
 
-
 Value listunspent(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() > 3)
@@ -252,7 +251,6 @@ Value listunspent(const Array& params, bool fHelp)
 
     return results;
 }
-
 
 Value createrawtransaction(const Array& params, bool fHelp)
 {
@@ -519,7 +517,6 @@ Value signrawtransaction(const Array& params, bool fHelp)
         }
         if (!VerifyScript(txin.scriptSig, prevPubKey, mergedTx, i, SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_STRICTENC, 0))
             fComplete = false;
-
     }
 
     Object result;

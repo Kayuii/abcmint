@@ -159,7 +159,7 @@ static std::vector<CAddress> convertSeed6(const std::vector<SeedSpec6> &vSeedsIn
 bool RecvLine(SOCKET hSocket, string& strLine)
 {
     strLine = "";
-    while(true)
+    loop
     {
         char c;
         int nBytes = recv(hSocket, &c, 1, 0);
@@ -331,7 +331,7 @@ bool GetMyExternalIP2(const CService& addrConnect, const char* pszGet, const cha
     {
         if (strLine.empty()) // HTTP response is separated from headers by blank line
         {
-            while(true)
+            loop
             {
                 if (!RecvLine(hSocket, strLine))
                 {
@@ -774,7 +774,7 @@ static list<CNode*> vNodesDisconnected;
 void ThreadSocketHandler()
 {
     unsigned int nPrevNodeCount = 0;
-    while(true)
+    loop
     {
         //
         // Disconnect nodes
@@ -1142,7 +1142,7 @@ void ThreadMapPort()
         string strDesc = "Abcmint " + FormatFullVersion();
 
         try {
-            while(true) {
+            loop {
 #ifndef UPNPDISCOVER_SUCCESS
                 /* miniupnpc 1.5 */
                 r = UPNP_AddPortMapping(urls.controlURL, data.first.servicetype,
@@ -1291,7 +1291,7 @@ void DumpAddresses()
     CAddrDB adb;
     adb.Write(addrman);
 
-    printf("Flushed %d addresses to peers.dat  %" PRI64d "ms\n",
+    printf("Flushed %d addresses to peers.dat  %"PRI64d"ms\n",
            addrman.size(), GetTimeMillis() - nStart);
 }
 
@@ -1336,7 +1336,7 @@ void ThreadOpenConnections()
 
     // Initiate network connections
     int64 nStart = GetTime();
-    while(true)
+    loop
     {
         ProcessOneShot();
 
@@ -2941,4 +2941,3 @@ void RelayTransaction(const CTransaction& tx, const uint256& hash, const CDataSt
             pnode->PushInventory(inv);
     }
 }
-

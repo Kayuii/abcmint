@@ -1164,7 +1164,7 @@ bool CWallet::CreateTransaction(const vector<pair<CScript, int64> >& vecSend,
         LOCK2(cs_main, cs_wallet);
         {
             nFeeRet = nTransactionFee;
-            while(true)
+            loop
             {
                 wtxNew.vin.clear();
                 wtxNew.vout.clear();
@@ -1791,7 +1791,7 @@ bool CReserveKey::GetReservedKey(CPubKey& pubkey)
             vchPubKey = keypool.vchPubKey;
         else {
             if (pwallet->vchDefaultKey.IsValid()) {
-                //printf("CReserveKey::GetReservedKey(): Warning: Using default key instead of a new key, top up your keypool!");
+                printf("CReserveKey::GetReservedKey(): Warning: Using default key instead of a new key, top up your keypool!");
                 vchPubKey = pwallet->vchDefaultKey;
             } else
                 return false;

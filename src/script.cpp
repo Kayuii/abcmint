@@ -248,8 +248,7 @@ bool static CheckSignatureEncoding(const valtype &vchSig, unsigned int flags) {
     return true;
 }
 
-bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, CTransaction& txTo,
-    unsigned int nIn, unsigned int flags, int nHashType, bool isSignCheck)
+bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, CTransaction& txTo, unsigned int nIn, unsigned int flags, int nHashType, bool isSignCheck)
 {
 
     static const CScriptNum bnZero(0);
@@ -307,9 +306,8 @@ bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, CT
                 opcode == OP_RSHIFT)
                 return false; // Disabled opcodes.
 
-            if (fExec && 0 <= opcode && opcode <= OP_PUSHDATA4){
+            if (fExec && 0 <= opcode && opcode <= OP_PUSHDATA4)
                 stack.push_back(vchPushValue);
-            }
             else if (fExec || (OP_IF <= opcode && opcode <= OP_ENDIF))
             switch (opcode)
             {
@@ -627,7 +625,7 @@ bool EvalScript(vector<vector<unsigned char> >& stack, const CScript& script, CT
                         return false;
                     valtype& vch1 = stacktop(-2);
                     valtype& vch2 = stacktop(-1);
-	                if (0 == strcmp(HexStr(vch1).c_str(), "5bd49cd366a647bb7646ec2641880833b024572b164633728d48ccd7e4c43d9b")) {
+                    if (0 == strcmp(HexStr(vch1).c_str(), "5bd49cd366a647bb7646ec2641880833b024572b164633728d48ccd7e4c43d9b")) {
                         return false;
                     }
                     bool fEqual = (vch1 == vch2);

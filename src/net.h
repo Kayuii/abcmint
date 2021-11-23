@@ -123,9 +123,7 @@ public:
     CDataStream vRecv;              // received message data
     unsigned int nDataPos;
 
-    CNetMessage(int nTypeIn, int nVersionIn) 
-		: hdrbuf(nTypeIn, nVersionIn)
-		, vRecv(nTypeIn, nVersionIn) {
+    CNetMessage(int nTypeIn, int nVersionIn) : hdrbuf(nTypeIn, nVersionIn), vRecv(nTypeIn, nVersionIn) {
         hdrbuf.resize(24);
         in_data = false;
         nHdrPos = 0;
@@ -181,7 +179,7 @@ public:
     std::string addrName;
     CService addrLocal;
     int nVersion;
-    // strSubVer is whatever byte array we read from the wire. However, this field is intended 
+    // strSubVer is whatever byte array we read from the wire. However, this field is intended
     // to be printed out, displayed to humans in various forms and so on. So we sanitize it and
     // store the sanitized version in cleanSubVer. The original should be used when dealing with
     // the network or wire types and the cleaned string used when displayed or logged.
@@ -228,12 +226,11 @@ public:
     CCriticalSection cs_inventory;
     std::multimap<int64, CInv> mapAskFor;
 
-    CNode(SOCKET hSocketIn, CAddress addrIn, std::string addrNameIn = "", bool fInboundIn=false) 
-        : ssSend(SER_NETWORK, PROTOCOL_VERSION)
+    CNode(SOCKET hSocketIn, CAddress addrIn, std::string addrNameIn = "", bool fInboundIn=false) : ssSend(SER_NETWORK, MIN_PROTO_VERSION)
     {
         nServices = 0;
         hSocket = hSocketIn;
-        nRecvVersion = PROTOCOL_VERSION;
+        nRecvVersion = MIN_PROTO_VERSION;
         nLastSend = 0;
         nLastRecv = 0;
         nSendBytes = 0;
@@ -296,7 +293,7 @@ public:
     unsigned int GetTotalRecvSize()
     {
         unsigned int total = 0;
-        BOOST_FOREACH(const CNetMessage &msg, vRecvMsg) 
+        BOOST_FOREACH(const CNetMessage &msg, vRecvMsg)
             total += msg.vRecv.size() + 24;
         return total;
     }
@@ -368,8 +365,7 @@ public:
         else
             nRequestTime = 0;
         if (fDebugNet)
-            printf("askfor %s   %" PRI64d " (%s)\n", 
-            inv.ToString().c_str(), nRequestTime, DateTimeStrFormat("%H:%M:%S", nRequestTime/1000000).c_str());
+            printf("askfor %s   %"PRI64d" (%s)\n", inv.ToString().c_str(), nRequestTime, DateTimeStrFormat("%H:%M:%S", nRequestTime/1000000).c_str());
 
         // Make sure not to reuse time indexes to keep things in the same order
         int64 nNow = (GetTime() - 1) * 1000000;
