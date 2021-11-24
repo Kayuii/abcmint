@@ -8,18 +8,18 @@
 #include "../pqcrypto/random.h"
 #include "miner.h"
 
-const static unsigned int DIFFMN = 8; 
-const static unsigned int NUM_EQUATIONS = 41; 
+const static unsigned int DIFFMN = 8;
+const static unsigned int NUM_EQUATIONS = 41;
 
 TEST(asmMinerTest, GetBlockValue) {
    int64 sum = 21474836470000000;
    int64 fees = 0;
-   for (int loop = 1; loop <=  88 * 365 * 144 + 10000000; loop++) {
-       int64 temp =  GetBlockValue(loop, fees);
+   for (int loopx = 1; loopx <=  88 * 365 * 144 + 10000000; loopx++) {
+       int64 temp =  GetBlockValue(loopx, fees);
 	   sum += temp;
    }
  //  std::cout<<"total number ABC	"<<sum<<std::endl;
-   EXPECT_TRUE(sum == (pow(2,31) - 1)*COIN);  
+   EXPECT_TRUE(sum == (pow(2,31) - 1)*COIN);
 }
 
 #if 0
@@ -102,7 +102,7 @@ TEST(asmMinerTest, initBlockIndex) {
 	block.nNonce   = uint256("0x0000000000000000000000000000000000000000000000000001ee7340a9a1d6");
 	uint256 tempHash = block.hashPrevBlock ^ block.hashMerkleRoot;
 	uint256 seedHash = Hash(BEGIN(tempHash), END(tempHash));
-	EXPECT_TRUE(CheckSolution(seedHash, NUM_EQUATIONS, block.nNonce));		
+	EXPECT_TRUE(CheckSolution(seedHash, NUM_EQUATIONS, 0, 1, block.nNonce));
 	//// debug print
 	uint256 hash = block.GetHash();
 #if 0
@@ -125,7 +125,3 @@ TEST(asmMinerTest, initBlockIndex) {
 
 }
 #endif
-
-
-
-
