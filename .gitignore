@@ -77,4 +77,6 @@ node_modules/
 # vscode
 .vscode/
 
-abcmint
+src/abcmint
+src/abcmintd
+src/test_abcmint
